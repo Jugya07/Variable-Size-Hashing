@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "*.cpp": "cpp",
+        "murmurhash3.h": "c",
+        "seeds.h": "c",
+        "string": "cpp",
+        "chrono": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
