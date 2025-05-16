@@ -5,7 +5,8 @@
         "murmurhash3.h": "c",
         "seeds.h": "c",
         "string": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "stdexcept": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
