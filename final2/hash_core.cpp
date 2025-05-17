@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include <chrono>
+#include <algorithm>
 
 #define getBit(n, p) (((n) >> (p)) & 1)
 
@@ -114,7 +115,7 @@ string cryptographic_hash(const string &input, int output_size_bits, int cost)
     {
         throw runtime_error("Output size must be positive and a multiple of 4");
     }
-    if (output_size_bits > 1000000)
+    if (output_size_bits > 10000)
     {
         throw runtime_error("Output size too large");
     }
@@ -125,8 +126,18 @@ string cryptographic_hash(const string &input, int output_size_bits, int cost)
 
     string mystr = input + to_string(output_size_bits);
     int s = sqrt(cost);
-    int m = get_prime(s + 1);
-    int n = get_prime(s + 4);
+    // Cap prime index at 89 (max in primes.cpp) and scale matrix size
+    int prime_idx_m = min(s / 2, 89); // Divide s to stay within bounds
+    int prime_idx_n = min(s / 2 + 3, 89);
+    int scale = max(1, s / 10); // Scale factor grows with cost
+    int m = get_prime(prime_idx_m) * scale;
+    int n = get_prime(prime_idx_n) * scale;
+
+    // Prevent overflow
+    if (m > 10000 || n > 10000 || static_cast<long long>(m) * n > 100000000)
+    {
+        throw runtime_error("Matrix size too large");
+    }
 
     vector<vector<uint8_t>> mat(m, vector<uint8_t>(n));
     fill_matrix(m, n, mat, mystr);
@@ -160,7 +171,7 @@ string run_tests()
               "\nBit differences: " + to_string(diff) + " (~" +
               to_string((double)diff / bits * 100) + "%)\n\n";
 
-    // Speed test
+    // Speed test (cost=24)
     auto start = chrono::high_resolution_clock::now();
     int trials = 1000;
     for (int i = 0; i < trials; ++i)
@@ -172,7 +183,7 @@ string run_tests()
     output += "Speed Test:\nTime for " + to_string(trials) +
               " hashes (64 bits, cost=24): " + to_string(duration) + " ms\n";
 
-    // High-cost test
+    // Speed test (cost=1000)
     cost = 1000;
     start = chrono::high_resolution_clock::now();
     for (int i = 0; i < trials; ++i)
@@ -183,6 +194,18 @@ string run_tests()
     duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
     output += "Speed Test (High Cost):\nTime for " + to_string(trials) +
               " hashes (64 bits, cost=1000): " + to_string(duration) + " ms\n";
+
+    // Speed test (cost=10000)
+    cost = 10000;
+    start = chrono::high_resolution_clock::now();
+    for (int i = 0; i < trials; ++i)
+    {
+        cryptographic_hash(input + to_string(i), bits, cost);
+    }
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+    output += "Speed Test (Very High Cost):\nTime for " + to_string(trials) +
+              " hashes (64 bits, cost=10000): " + to_string(duration) + " ms\n";
 
     return output;
 }

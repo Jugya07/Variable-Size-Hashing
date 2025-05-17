@@ -29,10 +29,13 @@ int main()
             cout << "Enter output size (bits, multiple of 4): ";
             int size;
             cin >> size;
+            cout << "Enter cost (1–100000): ";
+            int cost;
+            cin >> cost;
             try
             {
                 auto start = chrono::high_resolution_clock::now();
-                string hash = cryptographic_hash(input, size, 24);
+                string hash = cryptographic_hash(input, size, cost);
                 auto end = chrono::high_resolution_clock::now();
                 auto duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
                 cout << "Hash: " << hash << endl;

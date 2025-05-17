@@ -21,6 +21,7 @@ private slots:
 private:
     QLineEdit *inputEdit;
     QSpinBox *sizeEdit;
+    QSpinBox *costEdit;
     QTextEdit *outputEdit;
     QPushButton *hashButton;
     QPushButton *testButton;
