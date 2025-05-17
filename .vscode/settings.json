@@ -6,7 +6,8 @@
         "seeds.h": "c",
         "string": "cpp",
         "chrono": "cpp",
-        "stdexcept": "cpp"
+        "stdexcept": "cpp",
+        "vector": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

@@ -126,9 +126,9 @@ string cryptographic_hash(const string &input, int output_size_bits, int cost)
 
     string mystr = input + to_string(output_size_bits);
     int s = sqrt(cost);
-    // Cap prime index at 89 (max in primes.cpp) and scale matrix size
-    int prime_idx_m = min(s / 2, 89); // Divide s to stay within bounds
-    int prime_idx_n = min(s / 2 + 3, 89);
+    // Cap prime index at 570 (max in primes.cpp) and scale matrix size
+    int prime_idx_m = min(s, 570); // Divide s to stay within bounds
+    int prime_idx_n = min(s + 3, 570);
     int scale = max(1, s / 10); // Scale factor grows with cost
     int m = get_prime(prime_idx_m) * scale;
     int n = get_prime(prime_idx_n) * scale;

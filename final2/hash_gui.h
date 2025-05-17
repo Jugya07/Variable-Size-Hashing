@@ -16,7 +16,7 @@ public:
 
 private slots:
     void computeHash();
-    void runTests();
+    // void runTests();
 
 private:
     QLineEdit *inputEdit;
@@ -24,7 +24,7 @@ private:
     QSpinBox *costEdit;
     QTextEdit *outputEdit;
     QPushButton *hashButton;
-    QPushButton *testButton;
+    // QPushButton *testButton;
 };
 
 #endif // HASH_GUI_H

@@ -13,7 +13,7 @@ HashGUI::HashGUI(QWidget *parent) : QWidget(parent)
     costEdit = new QSpinBox(this);
     outputEdit = new QTextEdit(this);
     hashButton = new QPushButton("Compute Hash", this);
-    testButton = new QPushButton("Run Tests", this);
+    // testButton = new QPushButton("Run Tests", this);
 
     // Configure widgets
     inputEdit->setPlaceholderText("Enter input string");
@@ -33,14 +33,14 @@ HashGUI::HashGUI(QWidget *parent) : QWidget(parent)
     layout->addWidget(new QLabel("Cost (1–100000):"));
     layout->addWidget(costEdit);
     layout->addWidget(hashButton);
-    layout->addWidget(testButton);
+    // layout->addWidget(testButton);
     layout->addWidget(new QLabel("Output:"));
     layout->addWidget(outputEdit);
     setLayout(layout);
 
     // Connect signals
     connect(hashButton, &QPushButton::clicked, this, &HashGUI::computeHash);
-    connect(testButton, &QPushButton::clicked, this, &HashGUI::runTests);
+    // connect(testButton, &QPushButton::clicked, this, &HashGUI::runTests);
 }
 
 void HashGUI::computeHash()
@@ -66,8 +66,8 @@ void HashGUI::computeHash()
     }
 }
 
-void HashGUI::runTests()
-{
-    std::string result = run_tests();
-    outputEdit->setText(QString::fromStdString(result));
-}
+// void HashGUI::runTests()
+// {
+//     std::string result = run_tests();
+//     outputEdit->setText(QString::fromStdString(result));
+// }
